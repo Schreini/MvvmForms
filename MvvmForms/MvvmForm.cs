@@ -9,24 +9,25 @@ namespace MvvmForms
 {
     public class MvvmForm : Form
     {
-        private readonly Dictionary<string, TextBox> bindings = new Dictionary<string, TextBox>();
+        private readonly Dictionary<string, BindingBase> bindings = new Dictionary<string, BindingBase>();
 
         //abstract
         protected virtual void InitializeBindings()
         {
         }
 
-        protected void OneWayBinding<T>(Expression<Func<T>> source, TextBox destination)
+        protected void RegisterBinding<T>(Expression<Func<T>> source, TextBox destination)
         {
-            bindings.Add(this.GetPropertyNameFromExpression(source), destination);
+            var name = this.GetPropertyNameFromExpression(source);
+            bindings.Add(name, new TextBinding(this, GetPropertyInfo(name), destination));
         }
 
         protected void DoBindings()
         {
             InitializeBindings();
-            foreach (KeyValuePair<string, TextBox> binding in bindings)
+            foreach (KeyValuePair<string, BindingBase> binding in bindings)
             {
-                RaisePropertyChanged(binding.Key);
+                binding.Value.Bind();
             }
         }
 
@@ -38,10 +39,13 @@ namespace MvvmForms
 
         public void RaisePropertyChanged(string whichProperty)
         {
-            var pi = GetType().GetProperties().Where(p => p.Name == whichProperty).Single();
-            Object o;
-            o = this;
-            bindings[whichProperty].Text = (string)pi.GetValue(o, BindingFlags.Default, null, null, null);
+            if(bindings.ContainsKey(whichProperty))
+                bindings[whichProperty].Bind();
+        }
+
+        private PropertyInfo GetPropertyInfo(string whichProperty)
+        {
+            return GetType().GetProperties().Where(p => p.Name == whichProperty).Single();
         }
     }
 }

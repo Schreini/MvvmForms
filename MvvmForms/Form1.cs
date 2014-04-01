@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Windows.Forms;
 
 namespace MvvmForms
 {
@@ -8,7 +6,7 @@ namespace MvvmForms
     {
         protected override void InitializeBindings()
         {
-            OneWayBinding(() => Date, TxtDate);
+            RegisterBinding(() => Date, TxtDate);
         }
 
         public Form1()
