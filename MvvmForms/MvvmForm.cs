@@ -9,7 +9,7 @@ namespace MvvmForms
 {
     public class MvvmForm : Form
     {
-        private readonly Dictionary<string, BindingBase> bindings = new Dictionary<string, BindingBase>();
+        private readonly Dictionary<string, IList<BindingBase>> _bindings = new Dictionary<string, IList<BindingBase>>();
 
         //abstract
         protected virtual void InitializeBindings()
@@ -19,15 +19,21 @@ namespace MvvmForms
         protected void RegisterBinding<T>(Expression<Func<T>> source, TextBox destination)
         {
             var name = this.GetPropertyNameFromExpression(source);
-            bindings.Add(name, new TextBoxBinding(this, GetPropertyInfo(name), destination));
+            if(!_bindings.ContainsKey(name))
+                _bindings.Add(name, new List<BindingBase>());
+
+            _bindings[name].Add(new TextBoxBinding(this, GetPropertyInfo(name), destination));
         }
 
         protected void DoBindings()
         {
             InitializeBindings();
-            foreach (KeyValuePair<string, BindingBase> binding in bindings)
+            foreach (var binding in _bindings)
             {
-                binding.Value.SetInView();
+                foreach (var b in binding.Value)
+                {
+                    b.SetInView();
+                }
             }
         }
 
@@ -39,8 +45,8 @@ namespace MvvmForms
 
         public void RaisePropertyChanged(string whichProperty)
         {
-            if(bindings.ContainsKey(whichProperty))
-                bindings[whichProperty].SetInView();
+            if(_bindings.ContainsKey(whichProperty))
+                _bindings[whichProperty].ToList().ForEach(b => b.SetInView());
         }
 
         private PropertyInfo GetPropertyInfo(string whichProperty)
