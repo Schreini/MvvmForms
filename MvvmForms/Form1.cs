@@ -3,12 +3,12 @@ using System.Windows.Forms;
 
 namespace MvvmForms
 {
-    public partial class Form1 : MvvmForm<string>
+    public partial class Form1 : MvvmForm
     {
         protected override void InitializeBindings()
         {
-            RegisterBinding(() => Date, TxtDate, t => t.Text);
-            RegisterBinding(() => Date, TxtDate2, t=>t.Text);
+            RegisterStringBinding(() => Date, TxtDate, t => t.Text);
+            RegisterStringBinding(() => Date, TxtDate2, t=>t.Text);
         }
 
         public Form1()
