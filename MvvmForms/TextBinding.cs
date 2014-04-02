@@ -18,8 +18,7 @@ namespace MvvmForms
 
         public override void Bind()
         {
-            //ToDo: Warum geht hier GetValue(Source) nicht ???
-            Destination.Text = (string)PropInfo.GetValue(Source, BindingFlags.Default, null, null, null);
+            Destination.Text = (string) PropInfo.GetValue(Source, null);
         }
     }
 }
