@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace MvvmForms
@@ -28,10 +27,10 @@ namespace MvvmForms
         }
         */
 
-        protected void RegisterBinding(
+        protected void RegisterBinding<TControl>(
             /*object viewModel,*/ Expression<Func<TValue>> viewModelProperty,
-            object control, Expression<Func<TValue>> controlProperty
-            )
+            TControl control, Expression<Func<TControl, TValue>> controlProperty
+            ) where TControl : Control
         {
             var vmPv = new PropertyValue<TValue>(this.GetPropertyInfoFromExpression(viewModelProperty), this);
             var ctrlPv = new PropertyValue<TValue>(control.GetPropertyInfoFromExpression(controlProperty), control);
@@ -40,7 +39,17 @@ namespace MvvmForms
             if(!_bindings.ContainsKey(vmPropertyName))
                 _bindings.Add(vmPropertyName, new List<ValueBinding<TValue>>());
 
-            _bindings[vmPropertyName].Add(new ValueBinding<TValue>(vmPv, ctrlPv));
+            _bindings[vmPropertyName].Add(CreateBinding(vmPv, ctrlPv, control));
+        }
+
+        private ValueBinding<TValue> CreateBinding<TControl>(
+            PropertyValue<TValue> vmPv, PropertyValue<TValue> ctrlPv, TControl control)
+            where TControl : Control
+        {
+            if (typeof(TControl) == typeof(TextBox))
+                return new TextBoxTextChangedBinding<TValue>(vmPv, ctrlPv, control as TextBox);
+
+            return new ValueBinding<TValue>(vmPv, ctrlPv);
         }
 
         protected void DoBindings()
@@ -50,7 +59,7 @@ namespace MvvmForms
             {
                 foreach (var b in binding.Value)
                 {
-                    b.SetInView();
+                    b.SetValueInControl();
                 }
             }
         }
@@ -64,7 +73,7 @@ namespace MvvmForms
         public void RaisePropertyChanged(string whichProperty)
         {
             if(_bindings.ContainsKey(whichProperty))
-                _bindings[whichProperty].ToList().ForEach(b => b.SetInView());
+                _bindings[whichProperty].ToList().ForEach(b => b.SetValueInControl());
         }
     }
 }

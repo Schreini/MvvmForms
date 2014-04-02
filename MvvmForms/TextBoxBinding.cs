@@ -6,6 +6,7 @@ namespace MvvmForms
 
     //ToDo: implement IDisposable
     //ToDo: Eventlistener lösen
+    /*
     public class TextBoxBinding : BindingBase
     {
         public object Source { get; set; }
@@ -43,4 +44,5 @@ namespace MvvmForms
             PropInfo.SetValue(Source, Destination.Text, null);
         }
     }
+    */
 }

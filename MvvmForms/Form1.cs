@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace MvvmForms
 {
-    public partial class Form1 : MvvmForm
+    public partial class Form1 : MvvmForm<string>
     {
         protected override void InitializeBindings()
         {
-            RegisterBinding(() => Date, TxtDate);
-            RegisterBinding(() => Date, TxtDate2);
+            RegisterBinding(() => Date, TxtDate, t => t.Text);
+            RegisterBinding(() => Date, TxtDate2, t=>t.Text);
         }
 
         public Form1()
