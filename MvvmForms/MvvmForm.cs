@@ -19,7 +19,7 @@ namespace MvvmForms
         protected void RegisterBinding<T>(Expression<Func<T>> source, TextBox destination)
         {
             var name = this.GetPropertyNameFromExpression(source);
-            bindings.Add(name, new TextBinding(this, GetPropertyInfo(name), destination));
+            bindings.Add(name, new TextBoxBinding(this, GetPropertyInfo(name), destination));
         }
 
         protected void DoBindings()
@@ -27,7 +27,7 @@ namespace MvvmForms
             InitializeBindings();
             foreach (KeyValuePair<string, BindingBase> binding in bindings)
             {
-                binding.Value.Bind();
+                binding.Value.SetInView();
             }
         }
 
@@ -40,7 +40,7 @@ namespace MvvmForms
         public void RaisePropertyChanged(string whichProperty)
         {
             if(bindings.ContainsKey(whichProperty))
-                bindings[whichProperty].Bind();
+                bindings[whichProperty].SetInView();
         }
 
         private PropertyInfo GetPropertyInfo(string whichProperty)

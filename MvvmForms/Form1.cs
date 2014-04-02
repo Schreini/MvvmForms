@@ -7,6 +7,7 @@ namespace MvvmForms
         protected override void InitializeBindings()
         {
             RegisterBinding(() => Date, TxtDate);
+            RegisterBinding(() => Date, TxtDate2);
         }
 
         public Form1()
@@ -19,13 +20,16 @@ namespace MvvmForms
         public string Date
         {
             get { return _date; }
-            set { _date = value; }
+            set
+            {
+                _date = value;
+                RaisePropertyChanged(() => Date);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Date = "lalamimi";
-            RaisePropertyChanged(() => Date);
         }
     }
 

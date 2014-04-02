@@ -2,6 +2,7 @@
 {
     public abstract class BindingBase
     {
-        public abstract void Bind();
+        public abstract void SetInView();
+        public abstract void SetInViewModel();
     }
 }
