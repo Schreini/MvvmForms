@@ -67,5 +67,18 @@ namespace MvvmForms
 
             return expression.Body as MemberExpression;
         }
+
+        public static PropertyInfo GetPropertyInfoFromExpression<T>(
+            this object target,
+            Expression<Func<T>> expression)
+        {
+            var name = GetPropertyNameFromExpression(target, expression);
+            return target.GetPropertyInfo(name);
+        }
+
+        public static PropertyInfo GetPropertyInfo(this object target, string name)
+        {
+            return target.GetType().GetProperty(name);
+        }
     }
 }
