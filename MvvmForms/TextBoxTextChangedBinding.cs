@@ -2,11 +2,14 @@
 
 namespace MvvmForms
 {
-    public class TextBoxTextChangedBinding<TValue> : ValueBinding<TValue>
+    public class TextBoxTextChangedBinding : ValueBinding<string>
     {
         public TextBox Control { get; set; }
 
-        public TextBoxTextChangedBinding(PropertyValue<TValue> viewModelPropertyValue, PropertyValue<TValue> controlPropertyValue, TextBox control) 
+        public TextBoxTextChangedBinding(
+            PropertyValue<string> viewModelPropertyValue, 
+            PropertyValue<string> controlPropertyValue, 
+            TextBox control) 
             : base(viewModelPropertyValue, controlPropertyValue)
         {
             Control = control;

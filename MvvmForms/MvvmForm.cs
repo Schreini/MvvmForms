@@ -75,7 +75,7 @@ namespace MvvmForms
             where TControl : Control
         {
             if (typeof(TControl) == typeof(TextBox))
-                return new TextBoxTextChangedBinding<string>(vmPv, ctrlPv, control as TextBox);
+                return new TextBoxTextChangedBinding(vmPv, ctrlPv, control as TextBox);
 
             return new ValueBinding<string>(vmPv, ctrlPv);
         }
