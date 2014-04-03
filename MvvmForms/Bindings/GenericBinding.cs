@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MvvmForms.Bindings
+﻿namespace MvvmForms.Bindings
 {
     public class GenericBinding<TValue> : ValueBinding<TValue>
     {

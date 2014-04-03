@@ -32,6 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.TxtDate2 = new System.Windows.Forms.TextBox();
             this.LblDate = new System.Windows.Forms.Label();
+            this.CbxEmpty = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TxtDate
@@ -66,11 +67,22 @@
             this.LblDate.Size = new System.Drawing.Size(0, 13);
             this.LblDate.TabIndex = 3;
             // 
+            // CbxEmpty
+            // 
+            this.CbxEmpty.AutoSize = true;
+            this.CbxEmpty.Location = new System.Drawing.Point(16, 190);
+            this.CbxEmpty.Name = "CbxEmpty";
+            this.CbxEmpty.Size = new System.Drawing.Size(55, 17);
+            this.CbxEmpty.TabIndex = 4;
+            this.CbxEmpty.Text = "Empty";
+            this.CbxEmpty.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(567, 253);
+            this.Controls.Add(this.CbxEmpty);
             this.Controls.Add(this.LblDate);
             this.Controls.Add(this.TxtDate2);
             this.Controls.Add(this.button1);
@@ -88,6 +100,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox TxtDate2;
         private System.Windows.Forms.Label LblDate;
+        private System.Windows.Forms.CheckBox CbxEmpty;
     }
 }
 

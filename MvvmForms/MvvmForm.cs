@@ -10,51 +10,36 @@ namespace MvvmForms
     public class MvvmForm : Form
     {
         private readonly Dictionary<string, IList<ValueBinding<string>>> _stringBindings = new Dictionary<string, IList<ValueBinding<string>>>();
+        private readonly Dictionary<Type, List<Bndng>> _bindings = new Dictionary<Type, List<Bndng>>();
 
         //abstract
         protected virtual void InitializeBindings()
         {
         }
 
-        /*
-        protected void RegisterBinding<T>(Expression<Func<T>> source, TextBox destination)
-        {
-            var name = this.GetPropertyNameFromExpression(source);
-            if(!_stringBindings.ContainsKey(name))
-                _stringBindings.Add(name, new List<BindingBase>());
+        #region string specific stuff
 
-            _stringBindings[name].Add(new TextBoxBinding(this, this.GetPropertyInfo(name), destination));
-        }
-        */
-
-        /*
-        protected void RegisterBinding<TControl, TValue>(
-            /*object viewModel,/ Expression<Func<TValue>> viewModelProperty,
-            TControl control, Expression<Func<TControl, TValue>> controlProperty
+        protected void RegisterBoolBinding<TControl>(
+            /*object viewModel,*/ Expression<Func<bool>> viewModelProperty,
+            TControl control, Expression<Func<TControl, bool>> controlProperty
             ) where TControl : Control
         {
-            var vmPv = new PropertyValue<TValue>(this.GetPropertyInfoFromExpression(viewModelProperty), this);
-            var ctrlPv = new PropertyValue<TValue>(control.GetPropertyInfoFromExpression(controlProperty), control);
+            var vmPv = new PropertyValue(this.GetPropertyInfoFromExpression(viewModelProperty), this);
+            var ctrlPv = new PropertyValue(control.GetPropertyInfoFromExpression(controlProperty), control);
 
             var vmPropertyName = this.GetPropertyNameFromExpression(viewModelProperty);
-            if(!_stringBindings.ContainsKey(vmPropertyName))
-                _stringBindings.Add(vmPropertyName, new List<ValueBinding<string>>());
+            if (!_bindings.ContainsKey(typeof(bool)))
+                _bindings.Add(typeof(bool), new List<Bndng>());
 
-            _stringBindings[vmPropertyName].Add(CreateBinding<TControl>(vmPv, ctrlPv, control));
+            Bndng bndng = _bindings[typeof (bool)].Where(b => b.VmPropertyName == vmPropertyName).SingleOrDefault();
+            if(bndng==null)
+            {
+                bndng = new Bndng(vmPropertyName);
+                _bindings[typeof(bool)].Add(bndng);
+            }
+            bndng.ValueBindings.Add(CreateBindingGeneric(vmPv, ctrlPv, control));
+            //Add(CreateBinding(vmPv, ctrlPv, control));
         }
-
-        private ValueBinding<TValue> CreateBinding<TControl, TValue>(
-            PropertyValue<TValue> vmPv, PropertyValue<TValue> ctrlPv, TControl control)
-            where TControl : Control
-        {
-            if (typeof(TControl) == typeof(TextBox))
-                return new TextBoxTextChangedBinding<TValue>(vmPv, ctrlPv, control as TextBox);
-
-            return new ValueBinding<TValue>(vmPv, ctrlPv);
-        }
-        */
-
-        #region string specific stuff
 
         protected void RegisterStringBinding<TControl>(
             /*object viewModel,*/ Expression<Func<string>> viewModelProperty,
@@ -81,6 +66,16 @@ namespace MvvmForms
             return new GenericBinding<string>(vmPv, ctrlPv);
         }
 
+        private ValueBinding CreateBindingGeneric<TControl>(
+            PropertyValue vmPv, PropertyValue ctrlPv, TControl control)
+            where TControl : Control
+        {
+            //if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
+            //    return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
+
+            return new ValueBinding(vmPv, ctrlPv);
+        }
+
         #endregion
 
         protected void DoBindings()
@@ -105,6 +100,24 @@ namespace MvvmForms
         {
             if(_stringBindings.ContainsKey(whichProperty))
                 _stringBindings[whichProperty].ToList().ForEach(b => b.SetValueInControl());
+
+            var binding = _bindings[typeof (bool)].Where(b => b.VmPropertyName == whichProperty).SingleOrDefault();
+            if(binding != null)
+            {
+                binding.ValueBindings.ToList().ForEach(b => b.SetValueInControl());
+            }
+        }
+    }
+
+    public class Bndng
+    {
+        public string VmPropertyName { get; private set; }
+        public IList<ValueBinding> ValueBindings { get; private set; }
+
+        public Bndng(string vmPropertyName)
+        {
+            VmPropertyName = vmPropertyName;
+            ValueBindings = new List<ValueBinding>();
         }
     }
 }
