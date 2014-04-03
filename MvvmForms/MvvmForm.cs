@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using MvvmForms.Bindings;
 
 namespace MvvmForms
 {
@@ -74,10 +75,10 @@ namespace MvvmForms
             PropertyValue<string> vmPv, PropertyValue<string> ctrlPv, TControl control)
             where TControl : Control
         {
-            if (typeof(TControl) == typeof(TextBox))
-                return new TextBoxTextChangedBinding(vmPv, ctrlPv, control as TextBox);
+            if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
+                return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
 
-            return new ValueBinding<string>(vmPv, ctrlPv);
+            return new GenericBinding<string>(vmPv, ctrlPv);
         }
 
         #endregion

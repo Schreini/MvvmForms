@@ -1,6 +1,8 @@
-﻿namespace MvvmForms
+﻿using System;
+
+namespace MvvmForms.Bindings
 {
-    public class ValueBinding<TValue>
+    public abstract class ValueBinding<TValue> : IDisposable
     {
         public PropertyValue<TValue> ViewModelPropertyValue { get; set; }
         public PropertyValue<TValue> ControlPropertyValue { get; set; }
@@ -20,5 +22,7 @@
         {
             ControlPropertyValue.Value = ViewModelPropertyValue.Value;
         }
+
+        public abstract void Dispose();
     }
 }

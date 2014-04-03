@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmForms", "MvvmForms\MvvmForms.csproj", "{974D38BC-8B91-456E-85A0-82CF86639FAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmWinForms.Example", "MvvmWinForms.Example\MvvmWinForms.Example.csproj", "{F8623661-4A7F-4BAD-A1EE-78A86821489D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{974D38BC-8B91-456E-85A0-82CF86639FAA}.Debug|x86.Build.0 = Debug|x86
 		{974D38BC-8B91-456E-85A0-82CF86639FAA}.Release|x86.ActiveCfg = Release|x86
 		{974D38BC-8B91-456E-85A0-82CF86639FAA}.Release|x86.Build.0 = Release|x86
+		{F8623661-4A7F-4BAD-A1EE-78A86821489D}.Debug|x86.ActiveCfg = Debug|x86
+		{F8623661-4A7F-4BAD-A1EE-78A86821489D}.Debug|x86.Build.0 = Debug|x86
+		{F8623661-4A7F-4BAD-A1EE-78A86821489D}.Release|x86.ActiveCfg = Release|x86
+		{F8623661-4A7F-4BAD-A1EE-78A86821489D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
