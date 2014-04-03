@@ -7,10 +7,10 @@ namespace MvvmWinForms.Example
     {
         protected override void InitializeBindings()
         {
-            RegisterStringBinding(() => Date, TxtDate, t => t.Text);
-            RegisterStringBinding(() => Date, TxtDate2, t => t.Text);
-            RegisterStringBinding(() => Date, LblDate, l => l.Text);
-            RegisterBoolBinding(() => Empty, CbxEmpty, c => c.Checked);
+            RegisterBinding(() => Date, TxtDate, t => t.Text);
+            RegisterBinding(() => Date, TxtDate2, t => t.Text);
+            RegisterBinding(() => Date, LblDate, l => l.Text);
+            RegisterBinding(() => Empty, CbxEmpty, c => c.Checked);
         }
 
         public Form1()

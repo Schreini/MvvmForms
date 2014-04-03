@@ -26,12 +26,12 @@ namespace MvvmForms.Bindings
         public abstract void Dispose();
     }
 
-    public class ValueBinding : IDisposable
+    public abstract class ValueBindingBase : IDisposable
     {
         public PropertyValue ViewModelPropertyValue { get; set; }
         public PropertyValue ControlPropertyValue { get; set; }
 
-        public ValueBinding(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue)
+        public ValueBindingBase(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue)
         {
             ViewModelPropertyValue = viewModelPropertyValue;
             ControlPropertyValue = controlPropertyValue;
@@ -47,9 +47,18 @@ namespace MvvmForms.Bindings
             ControlPropertyValue.Value = ViewModelPropertyValue.Value;
         }
 
-        public void Dispose()
+        public abstract void Dispose();
+    }
+
+    public class ValueBinding : ValueBindingBase
+    {
+        public ValueBinding(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue) 
+            : base(viewModelPropertyValue, controlPropertyValue)
         {
-            
+        }
+
+        public override void Dispose()
+        {
         }
     }
 

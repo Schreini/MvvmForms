@@ -3,13 +3,13 @@ using System.Windows.Forms;
 
 namespace MvvmForms.Bindings
 {
-    public class TextBoxBaseTextChangedBinding : ValueBinding<string>
+    public class TextBoxBaseTextChangedBinding : ValueBindingBase
     {
         public TextBoxBase Control { get; set; }
 
         public TextBoxBaseTextChangedBinding(
-            PropertyValue<string> viewModelPropertyValue, 
-            PropertyValue<string> controlPropertyValue, 
+            PropertyValue viewModelPropertyValue, 
+            PropertyValue controlPropertyValue, 
             TextBoxBase  control) 
             : base(viewModelPropertyValue, controlPropertyValue)
         {
