@@ -30,7 +30,7 @@ namespace MvvmForms
                 _bindings.Add(typeof(TValue), new List<Bndng>());
 
             Bndng bndng = _bindings[typeof(TValue)].Where(b => b.VmPropertyName == vmPropertyName).SingleOrDefault();
-            if(bndng==null)
+            if (bndng == null)
             {
                 bndng = new Bndng(vmPropertyName);
                 _bindings[typeof(TValue)].Add(bndng);
@@ -55,7 +55,7 @@ namespace MvvmForms
             {
                 foreach (var b in binding.Value)
                 {
-                    foreach(var x in b.ValueBindings)
+                    foreach (var x in b.ValueBindings)
                         x.SetValueInControl();
                 }
             }
@@ -74,22 +74,22 @@ namespace MvvmForms
                 return;
 
             var binding = _bindings[pi.PropertyType].Where(b => b.VmPropertyName == whichProperty).SingleOrDefault();
-            if(binding != null)
+            if (binding != null)
             {
                 binding.ValueBindings.ToList().ForEach(b => b.SetValueInControl());
             }
         }
-    }
 
-    public class Bndng
-    {
-        public string VmPropertyName { get; private set; }
-        public IList<ValueBindingBase> ValueBindings { get; private set; }
-
-        public Bndng(string vmPropertyName)
+        private class Bndng
         {
-            VmPropertyName = vmPropertyName;
-            ValueBindings = new List<ValueBindingBase>();
+            public string VmPropertyName { get; private set; }
+            public IList<ValueBindingBase> ValueBindings { get; private set; }
+
+            public Bndng(string vmPropertyName)
+            {
+                VmPropertyName = vmPropertyName;
+                ValueBindings = new List<ValueBindingBase>();
+            }
         }
     }
 }
