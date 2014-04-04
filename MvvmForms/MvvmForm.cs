@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Windows.Forms;
 using MvvmForms.Bindings;
 
@@ -10,7 +8,7 @@ namespace MvvmForms
 {
     public class MvvmForm : Form
     {
-        private readonly Dictionary<Type, List<Bndng>> _bindings = new Dictionary<Type, List<Bndng>>();
+        private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
 
         //abstract
         protected virtual void InitializeBindings()
@@ -26,16 +24,11 @@ namespace MvvmForms
             var ctrlPv = new PropertyValue(control.GetPropertyInfoFromExpression(controlProperty), control);
 
             var vmPropertyName = this.GetPropertyNameFromExpression(viewModelProperty);
-            if (!_bindings.ContainsKey(typeof(TValue)))
-                _bindings.Add(typeof(TValue), new List<Bndng>());
 
-            Bndng bndng = _bindings[typeof(TValue)].Where(b => b.VmPropertyName == vmPropertyName).SingleOrDefault();
-            if (bndng == null)
-            {
-                bndng = new Bndng(vmPropertyName);
-                _bindings[typeof(TValue)].Add(bndng);
-            }
-            bndng.ValueBindings.Add(CreateBindingGeneric(vmPv, ctrlPv, control));
+            if(!_bindings.ContainsKey(vmPropertyName))
+                _bindings.Add(vmPropertyName, new List<ValueBindingBase>());
+
+            _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
         }
 
         private ValueBindingBase CreateBindingGeneric<TControl>(
@@ -51,13 +44,10 @@ namespace MvvmForms
         protected void DoBindings()
         {
             InitializeBindings();
-            foreach (var binding in _bindings)
+            foreach (var binding in _bindings.Values)
             {
-                foreach (var b in binding.Value)
-                {
-                    foreach (var x in b.ValueBindings)
-                        x.SetValueInControl();
-                }
+                foreach (var x in binding)
+                    x.SetValueInControl();
             }
         }
 
@@ -69,26 +59,10 @@ namespace MvvmForms
 
         public void RaisePropertyChanged(string whichProperty)
         {
-            PropertyInfo pi = GetType().GetProperty(whichProperty);
-            if (!_bindings.ContainsKey(pi.PropertyType))
-                return;
-
-            var binding = _bindings[pi.PropertyType].Where(b => b.VmPropertyName == whichProperty).SingleOrDefault();
+            var binding = _bindings[whichProperty];
             if (binding != null)
             {
-                binding.ValueBindings.ToList().ForEach(b => b.SetValueInControl());
-            }
-        }
-
-        private class Bndng
-        {
-            public string VmPropertyName { get; private set; }
-            public IList<ValueBindingBase> ValueBindings { get; private set; }
-
-            public Bndng(string vmPropertyName)
-            {
-                VmPropertyName = vmPropertyName;
-                ValueBindings = new List<ValueBindingBase>();
+                binding.ForEach(b => b.SetValueInControl());
             }
         }
     }
