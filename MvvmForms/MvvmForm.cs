@@ -57,9 +57,9 @@ namespace MvvmForms
             RaisePropertyChanged(name);
         }
 
-        public void RaisePropertyChanged(string whichProperty)
+        public void RaisePropertyChanged(string vmPropertyName)
         {
-            var binding = _bindings[whichProperty];
+            var binding = _bindings[vmPropertyName];
             if (binding != null)
             {
                 binding.ForEach(b => b.SetValueInControl());
