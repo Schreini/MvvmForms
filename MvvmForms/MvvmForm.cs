@@ -6,14 +6,24 @@ using MvvmForms.Bindings;
 
 namespace MvvmForms
 {
-    public class MvvmForm : Form
+    public class MvvmForm<TViewModel> : Form where TViewModel : new()
     {
+        private readonly VvmBinder _binder;
         private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
+
+        public TViewModel ViewModel { get; private set; }
+
+        public MvvmForm(VvmBinder binder)
+        {
+            _binder = binder;
+            ViewModel = new TViewModel();
+        }
 
         //abstract
         protected virtual void InitializeBindings()
         {
         }
+
 
         protected void RegisterBinding<TControl, TValue>(
             /*object viewModel,*/ Expression<Func<TValue>> viewModelProperty,
