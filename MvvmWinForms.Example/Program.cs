@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MvvmForms;
 
 namespace MvvmWinForms.Example
 {
@@ -15,7 +16,9 @@ namespace MvvmWinForms.Example
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            var mainForm = new Form1();
+            mainForm.ViewModel = new ExampleViewModel();
+            Application.Run(mainForm);
         }
     }
 }
