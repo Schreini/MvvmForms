@@ -56,6 +56,15 @@ namespace MvvmForms
             _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
         }
 
+        protected void RegisterEventBinding<TViewModel, TControl>(
+            TViewModel viewModel, Action<TViewModel> vmEvent,
+            TControl control ) 
+            where TControl : Control
+        {
+            // TODO: irgendwo speichern, damit man das wieder disposen kann
+            new EventBinding<TControl, TViewModel>(viewModel, control, vmEvent);
+        }
+
         private ValueBindingBase CreateBindingGeneric<TControl>(
             PropertyValue vmPv, PropertyValue ctrlPv, TControl control)
             where TControl : Control

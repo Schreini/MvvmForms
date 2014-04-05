@@ -19,7 +19,7 @@ namespace MvvmWinForms.Example
 
         public bool Empty { get { return Date.Length == 0; } }
 
-        public void BtnClick(object sender, EventArgs e)
+        public void BtnClick()
         {
             Date = "lalamimi";
         }

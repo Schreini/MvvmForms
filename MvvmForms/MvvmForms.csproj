@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\EventBinding.cs" />
     <Compile Include="Bindings\ValueBindingBase.cs" />
     <Compile Include="MvvmForm.cs">
       <SubType>Form</SubType>

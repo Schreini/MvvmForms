@@ -23,7 +23,8 @@ namespace MvvmWinForms.Example
             RegisterBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
             RegisterBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
             //ToDo EventBinding
-            //RegisterBinding(ViewModel, vm => vm.BtnClick(button1, EventArgs.Empty), button1, b => Click);
+            RegisterEventBinding(ViewModel, vm => vm.BtnClick(), button1);
+            //RegisterEventBinding(ViewModel, vm => vm.BtnClick(button1, EventArgs.Empty), button1, c => c.Click);
 
 
             // oder in einer methode OnViewModelSet
