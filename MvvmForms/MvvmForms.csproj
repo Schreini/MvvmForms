@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\ButtonEventBinding.cs" />
     <Compile Include="Bindings\EventBinding.cs" />
     <Compile Include="Bindings\ValueBindingBase.cs" />
     <Compile Include="MvvmForm.cs">
@@ -66,7 +67,6 @@
       <DependentUpon>ViewBase.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModelBase.cs" />
-    <Compile Include="VvmBinder.cs" />
     <EmbeddedResource Include="MvvmForm.resx">
       <DependentUpon>MvvmForm.cs</DependentUpon>
     </EmbeddedResource>

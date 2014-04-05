@@ -56,13 +56,14 @@ namespace MvvmForms
             _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
         }
 
+        //TODO: hier ist wohl eine Methode pro Control notwendig, damit wir eine Control-Spezifische enum verwenden können
         protected void AddEventBinding<TViewModel, TControl>(
             TViewModel viewModel, Action<TViewModel> vmEvent,
-            TControl control ) 
+            TControl control, EventEnum evEnum ) 
             where TControl : Control
         {
-            // TODO: irgendwo speichern, damit man das wieder disposen kann
-            new EventBinding<TControl, TViewModel>(viewModel, control, vmEvent);
+            if(typeof(TControl) == typeof(Button))
+                new ButtonEventBinding<TViewModel>(viewModel, control as Button, vmEvent, evEnum);
         }
 
         private ValueBindingBase CreateBindingGeneric<TControl>(
@@ -75,8 +76,6 @@ namespace MvvmForms
             return new ValueBinding(vmPv, ctrlPv);
         }
 
-        protected virtual void InitializeBindings(VvmBinder binder)
-        {
-        }
+        public enum EventEnum {Click}
     }
 }

@@ -23,7 +23,7 @@ namespace MvvmWinForms.Example
             AddValueBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
             AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
 
-            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1);
+            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1, EventEnum.Click);
         }
     }
 }
