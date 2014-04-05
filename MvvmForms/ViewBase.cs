@@ -8,7 +8,7 @@ namespace MvvmForms
 {
     public partial class ViewBase : Form
     {
-        private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
+        internal readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
 
         private ViewModelBase _viewModel;
         public ViewModelBase ViewModel
@@ -40,7 +40,7 @@ namespace MvvmForms
         {
         }
 
-        protected void RegisterBinding<TViewModel, TControl, TValue>(
+        protected void AddValueBinding<TViewModel, TControl, TValue>(
             TViewModel viewModel, Expression<Func<TViewModel, TValue>> viewModelProperty,
             TControl control, Expression<Func<TControl, TValue>> controlProperty
             ) where TControl : Control
@@ -56,7 +56,7 @@ namespace MvvmForms
             _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
         }
 
-        protected void RegisterEventBinding<TViewModel, TControl>(
+        protected void AddEventBinding<TViewModel, TControl>(
             TViewModel viewModel, Action<TViewModel> vmEvent,
             TControl control ) 
             where TControl : Control
@@ -73,6 +73,10 @@ namespace MvvmForms
                 return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
 
             return new ValueBinding(vmPv, ctrlPv);
+        }
+
+        protected virtual void InitializeBindings(VvmBinder binder)
+        {
         }
     }
 }

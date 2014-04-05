@@ -66,6 +66,7 @@
       <DependentUpon>ViewBase.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="VvmBinder.cs" />
     <EmbeddedResource Include="MvvmForm.resx">
       <DependentUpon>MvvmForm.cs</DependentUpon>
     </EmbeddedResource>

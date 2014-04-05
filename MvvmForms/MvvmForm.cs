@@ -9,19 +9,12 @@ namespace MvvmForms
 {
     public class MvvmForm<TViewModel> : Form where TViewModel : new()
     {
-        private readonly VvmBinder<TViewModel> _binder;
         private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
 
         public TViewModel ViewModel { get; private set; }
 
         public MvvmForm()
         {
-        }
-
-        public MvvmForm(VvmBinder<TViewModel> binder)
-        {
-            _binder = binder;
-            ViewModel = new TViewModel();
         }
 
         //abstract
@@ -40,7 +33,7 @@ namespace MvvmForms
 
             var vmPropertyName = this.GetPropertyNameFromExpression(viewModelProperty);
 
-            if(!_bindings.ContainsKey(vmPropertyName))
+            if (!_bindings.ContainsKey(vmPropertyName))
                 _bindings.Add(vmPropertyName, new List<ValueBindingBase>());
 
             _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
@@ -78,33 +71,4 @@ namespace MvvmForms
 
         }
     }
-
-    public class VvmBinder<TViewModel>
-    {
-        //public Vmb<TViewModel> ForViewModel(TViewModel viewModel)
-        //{
-        //    return new Vmb<TViewModel>();
-        //}
-    }
-
-    //public class Vmb<TViewModel>
-    //{
-    //    public FromProp FromProperty<TValue>(Expression<Func<TViewModel, TValue>> property)
-    //    {
-    //        return new FromProp();
-    //    }
-    //}
-
-    //public class FromProp
-    //{
-    //    public ToCtrl ToControl(Control control)
-    //    {
-    //        return new ToCtrl();
-    //    }
-    //}
-
-    //public class ToCtrl
-    //{
-        
-    //}
 }

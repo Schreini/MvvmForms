@@ -18,21 +18,12 @@ namespace MvvmWinForms.Example
 
         protected override void InitializeBindings()
         {
-            RegisterBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
-            RegisterBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
-            RegisterBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
-            RegisterBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
-            //ToDo EventBinding
-            RegisterEventBinding(ViewModel, vm => vm.BtnClick(), button1);
-            //RegisterEventBinding(ViewModel, vm => vm.BtnClick(button1, EventArgs.Empty), button1, c => c.Click);
+            AddValueBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
+            AddValueBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
+            AddValueBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
+            AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
 
-
-            // oder in einer methode OnViewModelSet
-            //binder.ForViewModel(ViewModel)
-            //    .FromProperty(vm => vm.Date)
-            //        .ToControl(TxtDate).Register(t => t.Text)
-            //        .ToControl(TxtDate2).Register(t => t.Text)
-            //        .ToControl(LblDate).Register(l => l.Text);
+            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1);
         }
     }
 }
