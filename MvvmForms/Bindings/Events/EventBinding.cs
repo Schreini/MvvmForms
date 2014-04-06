@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MvvmForms.Bindings
+namespace MvvmForms.Bindings.Events
 {
     abstract class EventBinding<TViewModel> : IDisposable
     {

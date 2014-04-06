@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using MvvmForms.Bindings;
+using MvvmForms.Bindings.Events;
+using MvvmForms.Bindings.Events.MvvmForms.Bindings.Events;
+using MvvmForms.Events;
 
 namespace MvvmForms
 {
@@ -57,13 +60,25 @@ namespace MvvmForms
         }
 
         //TODO: hier ist wohl eine Methode pro Control notwendig, damit wir eine Control-Spezifische enum verwenden können
-        protected void AddEventBinding<TViewModel, TControl>(
+        protected void AddEventBinding<TViewModel>(
             TViewModel viewModel, Action<TViewModel> vmEvent,
-            TControl control, EventEnum evEnum ) 
-            where TControl : Control
+            Control control, ControlEvents ev)
         {
-            if(typeof(TControl) == typeof(Button))
-                new ButtonEventBinding<TViewModel>(viewModel, control as Button, vmEvent, evEnum);
+            new ControlEventBinding<TViewModel>(viewModel, control, vmEvent, ev);
+        }
+
+        protected void AddEventBinding<TViewModel>(
+            TViewModel viewModel, Action<TViewModel> vmEvent,
+            Button control, ButtonEvents ev)
+        {
+            new ButtonEventBinding<TViewModel>(viewModel, control, vmEvent, ev);
+        }
+
+        protected void AddEventBinding<TViewModel>(
+            TViewModel viewModel, Action<TViewModel> vmEvent,
+            CheckBox checkBox, CheckBoxEvents ev)
+        {
+            new CheckBoxEventBinding<TViewModel>(viewModel, checkBox, vmEvent, ev);
         }
 
         private ValueBindingBase CreateBindingGeneric<TControl>(
@@ -75,7 +90,5 @@ namespace MvvmForms
 
             return new ValueBinding(vmPv, ctrlPv);
         }
-
-        public enum EventEnum {Click}
     }
 }

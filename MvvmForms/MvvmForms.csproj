@@ -49,9 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\ButtonEventBinding.cs" />
-    <Compile Include="Bindings\EventBinding.cs" />
+    <Compile Include="Bindings\Events\ButtonEventBinding.cs" />
+    <Compile Include="Bindings\Events\CheckBoxEventBinding.cs" />
+    <Compile Include="Bindings\Events\ControlEventBinding.cs" />
+    <Compile Include="Bindings\Events\EventBinding.cs" />
     <Compile Include="Bindings\ValueBindingBase.cs" />
+    <Compile Include="Events\ButtonBaseEvents.cs" />
+    <Compile Include="Events\ButtonEvents.cs" />
+    <Compile Include="Events\CheckBoxEvents.cs" />
+    <Compile Include="Events\ControlEvents.cs" />
+    <Compile Include="Events\EventNames.cs" />
     <Compile Include="MvvmForm.cs">
       <SubType>Form</SubType>
     </Compile>
