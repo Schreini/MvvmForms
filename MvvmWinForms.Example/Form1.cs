@@ -1,4 +1,6 @@
-﻿using MvvmForms;
+﻿using System;
+using MvvmForms;
+using MvvmForms.Bindings;
 using MvvmForms.Events;
 
 namespace MvvmWinForms.Example
@@ -12,8 +14,11 @@ namespace MvvmWinForms.Example
 
         protected override void InitializeBindings()
         {
-            AddValueBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
-            AddValueBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
+            //AddValueBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
+            //AddValueBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
+            Binder.Text(TxtDate).To(vm => vm.Date);
+            Binder.Text(TxtDate2).To(vm => vm.Date);
+
             AddValueBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
             AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
 
@@ -22,5 +27,6 @@ namespace MvvmWinForms.Example
         }
     }
 
+    // necessary to work arround Visual Studio designer bug for forms with generic base classes
     public class ExampleBase : ViewBase<ExampleViewModel> { }
 }

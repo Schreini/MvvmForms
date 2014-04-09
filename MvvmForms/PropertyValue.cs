@@ -4,19 +4,21 @@ namespace MvvmForms
 {
     public class PropertyValue
     {
-        private readonly PropertyInfo _info;
         private readonly object _o;
+
+        public PropertyInfo Info { get; private set; }
 
         public PropertyValue(PropertyInfo info, object o)
         {
-            _info = info;
+            Info = info;
             _o = o;
         }
 
         public object Value
         {
-            get { return _info.GetValue(_o, null); }
-            set { _info.SetValue(_o, value, null); }
+            get { return Info.GetValue(_o, null); }
+            set { Info.SetValue(_o, value, null); }
         }
+
     }
 }

@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\Binder.cs" />
     <Compile Include="Bindings\Events\ButtonEventBinding.cs" />
     <Compile Include="Bindings\Events\CheckBoxEventBinding.cs" />
     <Compile Include="Bindings\Events\ControlEventBinding.cs" />

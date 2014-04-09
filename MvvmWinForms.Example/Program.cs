@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MvvmForms;
+using MvvmForms.Bindings;
 
 namespace MvvmWinForms.Example
 {
@@ -17,7 +18,9 @@ namespace MvvmWinForms.Example
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var mainForm = new Form1();
-            mainForm.ViewModel = new ExampleViewModel();
+            var exampleViewModel = new ExampleViewModel();
+            mainForm.Binder = new Binder<ExampleViewModel>(exampleViewModel);
+            mainForm.ViewModel = exampleViewModel;
             Application.Run(mainForm);
         }
     }

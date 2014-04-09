@@ -23,6 +23,15 @@ namespace MvvmForms
             }
         }
 
+        private Binder<TViewModel> _binder;
+        public Binder<TViewModel> Binder
+        {
+            get { return _binder; }
+            set { _binder = value;
+                _binder._bindings = _bindings;
+            }
+        }
+
         public ViewBase()
         {
             InitializeComponent();
