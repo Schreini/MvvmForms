@@ -7,7 +7,7 @@ namespace MvvmForms
 {
     public class ViewModelBase
     {
-        protected internal Dictionary<string, List<ValueBindingBase>> Bindings { get; set; }
+        internal Dictionary<string, List<ValueBindingBase>> Bindings { get; set; }
 
         public void RaisePropertyChanged<T>(Expression<Func<T>> property)
         {

@@ -1,17 +1,10 @@
-﻿using System;
-using MvvmForms;
+﻿using MvvmForms;
 using MvvmForms.Events;
 
 namespace MvvmWinForms.Example
 {
     public partial class Form1 : ExampleBase
     {
-        // necessary to work arround Visual Studio designer bug for forms with generic base classes
-        public new ExampleViewModel ViewModel { 
-            get { return (ExampleViewModel)base.ViewModel; } 
-            set { base.ViewModel = value; } 
-        }
-
         public Form1()
         {
             InitializeComponent();

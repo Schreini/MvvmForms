@@ -9,12 +9,12 @@ using MvvmForms.Events;
 
 namespace MvvmForms
 {
-    public partial class ViewBase<Tvm> : Form
+    public partial class ViewBase<TViewModel> : Form where TViewModel : ViewModelBase
     {
         internal readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
 
-        private ViewModelBase _viewModel;
-        public ViewModelBase ViewModel
+        private TViewModel _viewModel;
+        public TViewModel ViewModel
         {
             get { return _viewModel; }
             set { _viewModel = value;
@@ -43,7 +43,7 @@ namespace MvvmForms
         {
         }
 
-        protected void AddValueBinding<TViewModel, TControl, TValue>(
+        protected void AddValueBinding<TControl, TValue>(
             TViewModel viewModel, Expression<Func<TViewModel, TValue>> viewModelProperty,
             TControl control, Expression<Func<TControl, TValue>> controlProperty
             ) where TControl : Control
@@ -60,21 +60,21 @@ namespace MvvmForms
         }
 
         //TODO: hier ist wohl eine Methode pro Control notwendig, damit wir eine Control-Spezifische enum verwenden können
-        protected void AddEventBinding<TViewModel>(
+        protected void AddEventBinding(
             TViewModel viewModel, Action<TViewModel> vmEvent,
             Control control, ControlEvents ev)
         {
             new ControlEventBinding<TViewModel>(viewModel, control, vmEvent, ev);
         }
 
-        protected void AddEventBinding<TViewModel>(
+        protected void AddEventBinding(
             TViewModel viewModel, Action<TViewModel> vmEvent,
             Button control, ButtonEvents ev)
         {
             new ButtonEventBinding<TViewModel>(viewModel, control, vmEvent, ev);
         }
 
-        protected void AddEventBinding<TViewModel>(
+        protected void AddEventBinding(
             TViewModel viewModel, Action<TViewModel> vmEvent,
             CheckBox checkBox, CheckBoxEvents ev)
         {

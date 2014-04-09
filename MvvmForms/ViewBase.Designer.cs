@@ -1,6 +1,6 @@
 ﻿namespace MvvmForms
 {
-    partial class ViewBase<Tvm>
+    partial class ViewBase<TViewModel>
     {
         /// <summary>
         /// Required designer variable.
