@@ -9,7 +9,7 @@ using MvvmForms.Events;
 
 namespace MvvmForms
 {
-    public partial class ViewBase : Form
+    public partial class ViewBase<Tvm> : Form
     {
         internal readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
 

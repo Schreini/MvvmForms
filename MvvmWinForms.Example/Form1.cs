@@ -4,7 +4,7 @@ using MvvmForms.Events;
 
 namespace MvvmWinForms.Example
 {
-    public partial class Form1 : ViewBase
+    public partial class Form1 : ExampleBase
     {
         // necessary to work arround Visual Studio designer bug for forms with generic base classes
         public new ExampleViewModel ViewModel { 
@@ -28,4 +28,6 @@ namespace MvvmWinForms.Example
             AddEventBinding(ViewModel, vm => vm.EmptyClick(), CbxEmpty, CheckBoxEvents.Click);
         }
     }
+
+    public class ExampleBase : ViewBase<ExampleViewModel> { }
 }
