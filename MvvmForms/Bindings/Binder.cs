@@ -47,7 +47,7 @@ namespace MvvmForms.Bindings
             //do the binding
             var vmPv = new PropertyValue(_viewModel.GetPropertyInfoFromExpression(to), _viewModel);
 
-            var vmPropertyName = _controlPropertyValue.Info.Name;
+            var vmPropertyName = vmPv.Info.Name;
 
             if (!_bindings.ContainsKey(vmPropertyName))
                 _bindings.Add(vmPropertyName, new List<ValueBindingBase>());
