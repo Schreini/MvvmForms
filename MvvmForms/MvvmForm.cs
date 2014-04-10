@@ -43,8 +43,8 @@ namespace MvvmForms
             PropertyValue vmPv, PropertyValue ctrlPv, TControl control)
             where TControl : Control
         {
-            if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
-                return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
+            //if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
+            //    return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
 
             return new ValueBinding(vmPv, ctrlPv);
         }

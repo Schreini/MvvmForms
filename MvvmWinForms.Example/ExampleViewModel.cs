@@ -1,5 +1,4 @@
-﻿using System;
-using MvvmForms;
+﻿using MvvmForms;
 
 namespace MvvmWinForms.Example
 {
