@@ -23,41 +23,41 @@ namespace MvvmForms
         }
 
 
-        protected void RegisterBinding<TControl, TValue>(
-            /*object viewModel,*/ Expression<Func<TValue>> viewModelProperty,
-            TControl control, Expression<Func<TControl, TValue>> controlProperty
-            ) where TControl : Control
-        {
-            var vmPv = new PropertyValue(this.GetPropertyInfoFromExpression(viewModelProperty), this);
-            var ctrlPv = new PropertyValue(control.GetPropertyInfoFromExpression(controlProperty), control);
+        //protected void RegisterBinding<TControl, TValue>(
+        //    /*object viewModel,*/ Expression<Func<TValue>> viewModelProperty,
+        //    TControl control, Expression<Func<TControl, TValue>> controlProperty
+        //    ) where TControl : Control
+        //{
+        //    var vmPv = new PropertyValue(this.GetPropertyInfoFromExpression(viewModelProperty), this);
+        //    var ctrlPv = new PropertyValue(control.GetPropertyInfoFromExpression(controlProperty), control);
 
-            var vmPropertyName = this.GetPropertyNameFromExpression(viewModelProperty);
+        //    var vmPropertyName = this.GetPropertyNameFromExpression(viewModelProperty);
 
-            if (!_bindings.ContainsKey(vmPropertyName))
-                _bindings.Add(vmPropertyName, new List<ValueBindingBase>());
+        //    if (!_bindings.ContainsKey(vmPropertyName))
+        //        _bindings.Add(vmPropertyName, new List<ValueBindingBase>());
 
-            _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
-        }
+        //    _bindings[vmPropertyName].Add(CreateBindingGeneric(vmPv, ctrlPv, control));
+        //}
 
-        private ValueBindingBase CreateBindingGeneric<TControl>(
-            PropertyValue vmPv, PropertyValue ctrlPv, TControl control)
-            where TControl : Control
-        {
-            //if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
-            //    return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
+        //private ValueBindingBase CreateBindingGeneric<TControl>(
+        //    PropertyValue vmPv, PropertyValue ctrlPv, TControl control)
+        //    where TControl : Control
+        //{
+        //    //if (typeof(TControl) == typeof(TextBoxBase) || typeof(TextBoxBase).IsAssignableFrom(typeof(TControl)))
+        //    //    return new TextBoxBaseTextChangedBinding(vmPv, ctrlPv, control as TextBoxBase);
 
-            return new ValueBinding(vmPv, ctrlPv);
-        }
+        //    return new ValueBinding(vmPv, ctrlPv);
+        //}
 
-        protected void DoBindings()
-        {
-            InitializeBindings();
-            foreach (var binding in _bindings.Values)
-            {
-                foreach (var x in binding)
-                    x.SetValueInControl();
-            }
-        }
+        //protected void DoBindings()
+        //{
+        //    InitializeBindings();
+        //    foreach (var binding in _bindings.Values)
+        //    {
+        //        foreach (var x in binding)
+        //            x.SetValueInControl();
+        //    }
+        //}
 
         private void InitializeComponent()
         {

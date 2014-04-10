@@ -16,18 +16,11 @@ namespace MvvmForms.Bindings
             _viewModel = viewModel;
         }
 
-        public TextBinding<TViewModel, string> Text(TextBoxBase textControl)
+        public TextBinding<TViewModel, string> Text(Control textControl)
         {
             // TODO: Reflection current Method name Instead of Magic string?
             var pi = textControl.GetType().GetProperty("Text");
             return new TextBinding<TViewModel, string>(_bindings, _viewModel, new PropertyValue(pi, textControl), textControl);
-        }
-
-        public TextBinding<TViewModel, string> Text(Label labelControl)
-        {
-            // TODO: Reflection current Method name Instead of Magic string?
-            var pi = labelControl.GetType().GetProperty("Text");
-            return new TextBinding<TViewModel, string>(_bindings, _viewModel, new PropertyValue(pi, labelControl), labelControl);
         }
     }
 
@@ -51,7 +44,7 @@ namespace MvvmForms.Bindings
             _textControl = textControl;
         }
 
-        public void To(Expression<Func<TViewModel, TValue>> to)
+        public void OnTextChanged(Expression<Func<TViewModel, TValue>> to)
         {
             //do the binding
             var vmPv = new PropertyValue(_viewModel.GetPropertyInfoFromExpression(to), _viewModel);

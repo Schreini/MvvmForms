@@ -16,10 +16,10 @@ namespace MvvmWinForms.Example
         {
             //AddValueBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
             //AddValueBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
-            Binder.Text(TxtDate).To(vm => vm.Date);
-            Binder.Text(TxtDate2).To(vm => vm.Date);
+            Binder.Text(TxtDate).OnTextChanged(vm => vm.Date);
+            Binder.Text(TxtDate2).OnTextChanged(vm => vm.Date);
+            Binder.Text(LblDate).OnTextChanged(vm => vm.Date);
 
-            AddValueBinding(ViewModel, vm => vm.Date, LblDate, l => l.Text);
             AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
 
             AddEventBinding(ViewModel, vm => vm.BtnClick(), button1, ButtonEvents.Click);
