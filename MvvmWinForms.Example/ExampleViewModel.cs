@@ -24,12 +24,9 @@ namespace MvvmWinForms.Example
             {
                 _empty = value;
                 RaisePropertyChanged(() => Empty);
+                // Endlosschleife
+                //Date = Empty ? string.Empty : "nicht mehr leer";
             }
-        }
-
-        public void EmptyClick()
-        {
-            Date = Empty ? "nicht mehr leer" : string.Empty;
         }
 
         public void BtnClick()
