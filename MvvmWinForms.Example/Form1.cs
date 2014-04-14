@@ -11,19 +11,12 @@ namespace MvvmWinForms.Example
 
         protected override void InitializeBindings()
         {
-            //AddValueBinding(ViewModel, vm => vm.Date, TxtDate, t => t.Text);
-            //AddValueBinding(ViewModel, vm => vm.Date, TxtDate2, t => t.Text);
             Binder.Text(TxtDate).OnTextChanged(vm => vm.Date);
             Binder.Text(TxtDate2).OnTextChanged(vm => vm.Date);
             Binder.Text(LblDate).OnTextChanged(vm => vm.Date);
             Binder.Checked(CbxEmpty).OnClick(vm => vm.Empty);
 
             Binder.ToViewModel(button1).OnClick(vm => vm.BtnClick());
-            
-            AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
-
-//            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1, ButtonEvents.Click);
-            //AddEventBinding(ViewModel, vm => vm.EmptyClick(), CbxEmpty, CheckBoxEvents.Click);
         }
     }
 

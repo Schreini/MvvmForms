@@ -53,6 +53,7 @@ namespace MvvmForms
 
             return member.Name;
         }
+
         public static string GetPropertyNameFromExpression<TIn, TResult>(
             this object target,
             Expression<Func<TIn, TResult>> expression)

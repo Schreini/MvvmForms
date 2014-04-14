@@ -4,16 +4,16 @@ namespace MvvmForms.Bindings
 {
     public abstract class ValueBindingBase : IDisposable
     {
-        public PropertyValue ViewModelPropertyValue { get; set; }
-        public PropertyValue ControlPropertyValue { get; set; }
+        private PropertyValue ViewModelPropertyValue { get; set; }
+        private PropertyValue ControlPropertyValue { get; set; }
 
-        public ValueBindingBase(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue)
+        protected ValueBindingBase(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue)
         {
             ViewModelPropertyValue = viewModelPropertyValue;
             ControlPropertyValue = controlPropertyValue;
         }
 
-        public void SetValueInViewModel()
+        protected void SetValueInViewModel()
         {
             ViewModelPropertyValue.Value = ControlPropertyValue.Value;
         }

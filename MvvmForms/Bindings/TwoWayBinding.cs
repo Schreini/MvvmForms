@@ -2,7 +2,7 @@
 {
     public class TwoWayBinding : ValueBindingBase
     {
-        public EventValue BoundEvent { get; private set; }
+        private EventValue BoundEvent { get; set; }
 
         public TwoWayBinding(PropertyValue viewModelPropertyValue, PropertyValue controlPropertyValue, EventValue boundEvent)
             : base(viewModelPropertyValue, controlPropertyValue)

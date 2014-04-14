@@ -4,7 +4,7 @@ namespace MvvmForms
 {
     public class PropertyValue
     {
-        public object Target { get; private set; }
+        private object Target { get; set; }
         public PropertyInfo Info { get; private set; }
 
         public PropertyValue(PropertyInfo info, object o)
