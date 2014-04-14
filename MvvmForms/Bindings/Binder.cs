@@ -3,28 +3,56 @@ using System.Windows.Forms;
 
 namespace MvvmForms.Bindings
 {
-    public class Binder<TViewModel>
+    public class Binder
+    {
+        private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
+
+        protected Dictionary<string, List<ValueBindingBase>> Bindings
+        {
+            get { return _bindings; }
+        }
+
+        public void RaisePropertyChanged(string vmPropertyName)
+        {
+            var binding = Bindings[vmPropertyName];
+            if (binding != null)
+            {
+                binding.ForEach(b => b.SetValueInControl());
+            }
+        }
+
+        internal void DoBindings()
+        {
+            foreach (var binding in Bindings.Values)
+            {
+                foreach (var x in binding)
+                    x.SetValueInControl();
+            }
+        }
+    }
+
+    public class Binder<TViewModel> : Binder where TViewModel : ViewModelBase
     {
         private readonly TViewModel _viewModel;
-        public Dictionary<string, List<ValueBindingBase>> _bindings;
 
         public Binder(TViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel.Binder = this;
         }
 
         public TextBinding<TViewModel, string> Text(Control textControl)
         {
             // TODO: Reflection current Method name Instead of Magic string?
             var pi = textControl.GetType().GetProperty("Text");
-            return new TextBinding<TViewModel, string>(_bindings, _viewModel, new PropertyValue(pi, textControl), textControl);
+            return new TextBinding<TViewModel, string>(Bindings, _viewModel, new PropertyValue(pi, textControl), textControl);
         }
 
         public CheckedBinding<TViewModel, bool> Checked(CheckBox checkBox)
         {
             var pi = checkBox.GetType().GetProperty("Checked");
             return new CheckedBinding<TViewModel, bool>(
-                _bindings, _viewModel, new PropertyValue(pi, checkBox), checkBox);
+                Bindings, _viewModel, new PropertyValue(pi, checkBox), checkBox);
         }
 
         public ClickBinding<TViewModel> ToViewModel(Button button)

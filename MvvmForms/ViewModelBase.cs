@@ -7,7 +7,8 @@ namespace MvvmForms
 {
     public class ViewModelBase
     {
-        internal Dictionary<string, List<ValueBindingBase>> Bindings { get; set; }
+        internal Binder Binder { get; set; }
+//        internal Dictionary<string, List<ValueBindingBase>> Bindings { get; set; }
 
         public void RaisePropertyChanged<T>(Expression<Func<T>> property)
         {
@@ -17,11 +18,7 @@ namespace MvvmForms
 
         public void RaisePropertyChanged(string vmPropertyName)
         {
-            var binding = Bindings[vmPropertyName];
-            if (binding != null)
-            {
-                binding.ForEach(b => b.SetValueInControl());
-            }
+            Binder.RaisePropertyChanged(vmPropertyName);
         }
     }
 }

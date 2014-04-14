@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Windows.Forms;
 using MvvmForms.Bindings;
 
@@ -6,45 +6,29 @@ namespace MvvmForms
 {
     public partial class ViewBase<TViewModel> : Form where TViewModel : ViewModelBase
     {
-        private readonly Dictionary<string, List<ValueBindingBase>> _bindings = new Dictionary<string, List<ValueBindingBase>>();
-
-        private TViewModel _viewModel;
-        public TViewModel ViewModel
-        {
-            get { return _viewModel; }
-            set { _viewModel = value;
-                _viewModel.Bindings = _bindings;
-                DoBindings();
-            }
-        }
-
-        private Binder<TViewModel> _binder;
-        public Binder<TViewModel> Binder
-        {
-            get { return _binder; }
-            set { _binder = value;
-                _binder._bindings = _bindings;
-            }
-        }
+        private Binder<TViewModel> Binder { get; set; }
 
         public ViewBase()
         {
             InitializeComponent();
         }
 
-        protected void DoBindings()
+        //abstract
+        protected virtual void InitializeBindings(Binder<TViewModel> binder)
         {
-            InitializeBindings();
-            foreach (var binding in _bindings.Values)
-            {
-                foreach (var x in binding)
-                    x.SetValueInControl();
-            }
         }
 
-        //abstract
-        protected virtual void InitializeBindings()
+        public void SetBinder(Binder<TViewModel> binder)
         {
+            if(Binder!=null)
+            {
+                throw new Exception("Can set Binder only once.");
+            }
+
+            Binder = binder;
+
+            InitializeBindings(Binder);
+            Binder.DoBindings();
         }
     }
 }

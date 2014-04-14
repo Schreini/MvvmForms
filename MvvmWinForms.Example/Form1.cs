@@ -1,4 +1,5 @@
 ﻿using MvvmForms;
+using MvvmForms.Bindings;
 
 namespace MvvmWinForms.Example
 {
@@ -9,17 +10,19 @@ namespace MvvmWinForms.Example
             InitializeComponent();
         }
 
-        protected override void InitializeBindings()
+        protected override void InitializeBindings(Binder<ExampleViewModel> binder)
         {
-            Binder.Text(TxtDate).OnTextChanged(vm => vm.Date);
-            Binder.Text(TxtDate2).OnTextChanged(vm => vm.Date);
-            Binder.Text(LblDate).OnTextChanged(vm => vm.Date);
-            Binder.Checked(CbxEmpty).OnClick(vm => vm.Empty);
+            binder.Text(TxtDate).OnTextChanged(vm => vm.Date);
+            binder.Text(TxtDate2).OnTextChanged(vm => vm.Date);
+            binder.Text(LblDate).OnTextChanged(vm => vm.Date);
+            binder.Checked(CbxEmpty).OnClick(vm => vm.Empty);
 
-            Binder.ToViewModel(button1).OnClick(vm => vm.BtnClick());
+            binder.ToViewModel(button1).OnClick(vm => vm.BtnClick());
         }
     }
 
     // necessary to work arround Visual Studio designer bug for forms with generic base classes
-    public class ExampleBase : ViewBase<ExampleViewModel> { }
+    public class ExampleBase : ViewBase<ExampleViewModel>
+    {
+    }
 }
