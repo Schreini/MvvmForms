@@ -1,7 +1,4 @@
-﻿using System;
-using MvvmForms;
-using MvvmForms.Bindings;
-using MvvmForms.Events;
+﻿using MvvmForms;
 
 namespace MvvmWinForms.Example
 {
@@ -21,9 +18,11 @@ namespace MvvmWinForms.Example
             Binder.Text(LblDate).OnTextChanged(vm => vm.Date);
             Binder.Checked(CbxEmpty).OnClick(vm => vm.Empty);
 
+            Binder.ToViewModel(button1).OnClick(vm => vm.BtnClick());
+            
             AddValueBinding(ViewModel, vm => vm.Empty, CbxEmpty, c => c.Checked);
 
-            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1, ButtonEvents.Click);
+//            AddEventBinding(ViewModel, vm => vm.BtnClick(), button1, ButtonEvents.Click);
             //AddEventBinding(ViewModel, vm => vm.EmptyClick(), CbxEmpty, CheckBoxEvents.Click);
         }
     }

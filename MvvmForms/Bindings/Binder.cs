@@ -27,7 +27,30 @@ namespace MvvmForms.Bindings
         {
             var pi = checkBox.GetType().GetProperty("Checked");
             return new CheckedBinding<TViewModel, bool>(
-                _bindings, _viewModel, new PropertyValue(pi, checkBox), checkBox);            
+                _bindings, _viewModel, new PropertyValue(pi, checkBox), checkBox);
+        }
+
+        public ButtonClickBinding<TViewModel> ToViewModel(Button button)
+        {
+            var ei = button.GetType().GetEvent("Click");
+            return new ButtonClickBinding<TViewModel>(_viewModel, new EventValue(ei, button));
+        }
+    }
+
+    public class ButtonClickBinding <TViewModel>
+    {
+        private readonly TViewModel _viewModel;
+        private readonly EventValue _eventValue;
+
+        internal ButtonClickBinding(TViewModel viewModel, EventValue eventValue)
+        {
+            _viewModel = viewModel;
+            _eventValue = eventValue;
+        }
+
+        public void OnClick(Action<TViewModel> clickHandler)
+        {
+            _eventValue.SetEventHandler(() => clickHandler(_viewModel));
         }
     }
 
