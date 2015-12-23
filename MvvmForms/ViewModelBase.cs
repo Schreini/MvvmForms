@@ -18,7 +18,10 @@ namespace MvvmForms
 
         public void RaisePropertyChanged(string vmPropertyName)
         {
-            Binder.RaisePropertyChanged(vmPropertyName);
+            // if there is a RaisePropertyChanged call in the Constructor of a ViewModel
+            // Binder will be null.
+            if(Binder != null)
+                Binder.RaisePropertyChanged(vmPropertyName);
         }
     }
 }
