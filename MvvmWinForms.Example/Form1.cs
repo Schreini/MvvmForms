@@ -21,7 +21,7 @@ namespace MvvmWinForms.Example
         }
     }
 
-    // necessary to work arround Visual Studio designer bug for forms with generic base classes
+    // necessary to work around Visual Studio designer bug for forms with generic base classes
     public class ExampleBase : ViewBase<ExampleViewModel>
     {
     }
